@@ -59,19 +59,22 @@ public class main {
             return;
         }
 
-        int choice;
+        int choice = 0;
+        while (true) {
+            try {
+                System.out.print("Оберіть спосіб сортування (1 - за зростанням, 2 - за спаданням): ");
+                choice = scanner.nextInt();
 
-        try {
-            System.out.print("Оберіть спосіб сортування (1 - за зростанням, 2 - за спаданням): ");
-            choice = scanner.nextInt();
-        } catch (Exception e) {
-            System.out.println("Некоректний ввід");
-            return;
-        }
+                if (choice == 1 || choice == 2) {
+                    break;
+                } else {
+                    System.out.println("Помилка: введіть 1 або 2");
+                }
 
-        if (choice != 1 && choice != 2) {
-            System.out.println("Введіть 1 або 2");
-            return;
+            } catch (Exception e) {
+                System.out.println("Помилка: потрібно ввести число");
+                scanner.nextLine();
+            }
         }
 
         boolean ascending = choice == 1;
