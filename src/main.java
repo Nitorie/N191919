@@ -15,6 +15,7 @@ public class main {
 
         try {
             System.out.print("Введіть розмір масиву: ");
+
             size = scanner.nextInt();
 
             System.out.print("Введіть мінімальне значення: ");
@@ -27,7 +28,10 @@ public class main {
                 System.out.println("Помилка: мінімум не може бути більшим за максимум.");
                 return;
             }
-            if (size == 0) {System.out.println("Помилка: довжина массиву не може бути <= 0"); return; }
+            if (size <= 0) {
+                System.out.println("Помилка: довжина массиву не може бути <= 0");
+                return;
+            }
 
         } catch (Exception e) {
             System.out.println("Помилка введення даних.");
@@ -47,6 +51,7 @@ public class main {
         int[] selectionArray = Arrays.copyOf(array, array.length);
         int[] mergeArray = Arrays.copyOf(array, array.length);
         int[] countingArray = Arrays.copyOf(array, array.length);
+        int[] quickArray = Arrays.copyOf(array, array.length);
 
         LocalTime startTime = LocalTime.now();
         insertionSort(insertionArray);
@@ -82,6 +87,15 @@ public class main {
 
         System.out.println("\nСортування підрахунками:");
         System.out.println(Arrays.toString(countingArray));
+        System.out.println("Час: " + duration.toNanos() + " нс");
+
+        startTime = LocalTime.now();
+        quickSort(quickArray, 0, quickArray.length - 1);
+        endTime = LocalTime.now();
+        duration = Duration.between(startTime, endTime);
+
+        System.out.println("\nШвидке сортування (Quick Sort):");
+        System.out.println(Arrays.toString(quickArray));
         System.out.println("Час: " + duration.toNanos() + " нс");
     }
 
@@ -196,5 +210,33 @@ public class main {
                 count[i]--;
             }
         }
+    }
+
+    public static void quickSort(int[] array, int left, int right) {
+        if (left < right) {
+            int pivotIndex = partition(array, left, right);
+            quickSort(array, left, pivotIndex - 1);
+            quickSort(array, pivotIndex + 1, right);
+        }
+    }
+
+    public static int partition(int[] array, int left, int right) {
+        int pivot = array[right];
+        int i = left - 1;
+
+        for (int j = left; j < right; j++) {
+            if (array[j] <= pivot) {
+                i++;
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        int temp = array[i + 1];
+        array[i + 1] = array[right];
+        array[right] = temp;
+
+        return i + 1;
     }
 }
