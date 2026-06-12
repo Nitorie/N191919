@@ -13,6 +13,7 @@ public class main {
         int min;
         int max;
 
+
         try {
             System.out.print("Введіть розмір масиву: ");
 
